@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 import { createServerSupabaseClient } from "utils/supabase/server";
 import AuthProvider from "config/AuthProvider";
 import MainLayout from "layouts/MainLayout";
@@ -12,6 +13,13 @@ export const metadata: Metadata = {
   title: "하루소원",
   description: "하루하루 행복을 바라는 소원을 빌어봐요",
 };
+
+const yeongdeockSea = localFont({
+  src: "../public/font/Yeongdeok_Sea.ttf",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-sea",
+});
 
 declare global {
   interface Window {
@@ -31,7 +39,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className={yeongdeockSea.variable}>
       <body className={`${inter.className} max-w-[528px] mx-auto bg-[#f5f5f5]`}>
         <AuthProvider accessToken={session?.access_token}>
           <MainLayout>{children}</MainLayout>

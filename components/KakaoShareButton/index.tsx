@@ -2,8 +2,17 @@
 
 import Image from "next/image";
 import KakaoImage from "../../public/kakao_share.png";
+import { getLogoUrl } from "utils/constant";
 
-export default function KakaoShareButton({ content }: { content: string }) {
+type KaKaoShareButtonProps = {
+  title: string;
+  imageUrl?: string;
+};
+
+export default function KakaoShareButton({
+  title,
+  imageUrl = getLogoUrl,
+}: KaKaoShareButtonProps) {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
   const onShareClick = () => {
@@ -11,9 +20,8 @@ export default function KakaoShareButton({ content }: { content: string }) {
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: content,
-        imageUrl:
-          "https://rtgroihwoiiqctuykpgp.supabase.co/storage/v1/object/public/minibox/oneday-logo.png",
+        title: title,
+        imageUrl: imageUrl,
         link: {
           mobileWebUrl: shareUrl,
           webUrl: shareUrl,

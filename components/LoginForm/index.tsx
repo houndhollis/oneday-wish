@@ -17,8 +17,8 @@ export default function LoginForm() {
         height={300}
         className="w-full"
       />
-      <p className="mt-5">하루 소원 다이어리</p>
-      <p className="mt-1 text-3xl font-bold">하루소원</p>
+      <p className="mt-5 text-[22px] font-sea">하루 공감 다이어리</p>
+      <p className="mt-1 text-[36px] font-bold font-sea">하루공감</p>
       <div className="flex flex-col items-center gap-4">
         <button onClick={useKaKaoLogin} className="mt-5">
           <Image

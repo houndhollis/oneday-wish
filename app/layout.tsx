@@ -6,12 +6,13 @@ import { createServerSupabaseClient } from "utils/supabase/server";
 import AuthProvider from "config/AuthProvider";
 import MainLayout from "layouts/MainLayout";
 import KakaoScript from "utils/script/KakaoSrcipt";
+import ReactQueryClinetProvider from "config/ReactQueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "하루소원",
-  description: "하루하루 행복을 바라는 소원을 빌어봐요",
+  title: "하루공감",
+  description: "하루하루 공감과 기록을",
 };
 
 const yeongdeockSea = localFont({
@@ -42,7 +43,9 @@ export default async function RootLayout({
     <html lang="en" className={yeongdeockSea.variable}>
       <body className={`${inter.className} max-w-[528px] mx-auto bg-[#f5f5f5]`}>
         <AuthProvider accessToken={session?.access_token}>
-          <MainLayout>{children}</MainLayout>
+          <ReactQueryClinetProvider>
+            <MainLayout>{children}</MainLayout>
+          </ReactQueryClinetProvider>
         </AuthProvider>
         <KakaoScript />
       </body>

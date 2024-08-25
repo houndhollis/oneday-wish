@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import KakaoImage from "../../public/kakao_share.png";
 import { getLogoUrl } from "utils/constant";
+import { Share2 } from "react-feather";
 
 type KaKaoShareButtonProps = {
   title: string;
@@ -31,11 +30,7 @@ export default function KakaoShareButton({
   };
   return (
     <div onClick={onShareClick}>
-      <Image
-        className="w-6 h-6 cursor-pointer"
-        src={KakaoImage}
-        alt="카카오톡 공유 이미지"
-      />
+      <Share2 className="cursor-pointer" />
     </div>
   );
 }

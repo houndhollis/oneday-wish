@@ -7,6 +7,7 @@ import AuthProvider from "config/AuthProvider";
 import MainLayout from "layouts/MainLayout";
 import KakaoScript from "utils/script/KakaoSrcipt";
 import ReactQueryClinetProvider from "config/ReactQueryClientProvider";
+import RecoilProvider from "config/RecoilProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,7 +45,9 @@ export default async function RootLayout({
       <body className={`${inter.className} max-w-[528px] mx-auto bg-[#f5f5f5]`}>
         <AuthProvider accessToken={session?.access_token}>
           <ReactQueryClinetProvider>
-            <MainLayout>{children}</MainLayout>
+            <RecoilProvider>
+              <MainLayout>{children}</MainLayout>
+            </RecoilProvider>
           </ReactQueryClinetProvider>
         </AuthProvider>
         <KakaoScript />

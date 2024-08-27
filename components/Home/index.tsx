@@ -1,61 +1,39 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getPosts } from "actions/storageActions";
-import HomeItem from "./HomeItem";
-import { useRecoilState } from "recoil";
+import { getPosts } from "actions/postActions";
+import { useRecoilValue } from "recoil";
 import { changeScreenState } from "utils/recoil/atoms";
-import { Maximize2, Minimize2 } from "react-feather";
+import HomeItem from "./HomeItem";
+import HomeNav from "./HomeNav";
 
-export default function HomeSection() {
-  const [changeScreen, setChangeScreen] = useRecoilState(changeScreenState);
+export default function HomeSection({ session }) {
+  const changeScreen = useRecoilValue(changeScreenState);
   const isMax = changeScreen === "max";
 
   const postsQuery = useQuery({
     queryKey: ["post"],
     queryFn: () => {
-      return getPosts();
+      return getPosts(session?.user?.id);
     },
   });
 
-  if (!postsQuery.isPending) {
-    <p>잠시 대기중!</p>;
+  if (postsQuery.isPending) {
+    return (
+      <div className="p-4">
+        <p>아직 구현중입니다 스켈레톤! 잠시만 기다려주세요!</p>
+      </div>
+    );
   }
 
   return (
-    <div className="mt-3 bg-white">
-      <div className="px-4 py-2 flex items-center justify-between">
-        <h1 className="font-sea text-[22px]">
-          {isMax ? "크게보기" : "작게보기"}
-        </h1>
-        <div className="flex items-center gap-3">
-          <div
-            onClick={() => setChangeScreen("max")}
-            className={`border  rounded cursor-pointer ${
-              isMax ? "border-gray-300" : "border-black"
-            }`}
-          >
-            <Maximize2
-              className={`${isMax ? "text-gray-400" : "text-black"}`}
-            />
-          </div>
-          <div
-            onClick={() => setChangeScreen("min")}
-            className={`border  rounded cursor-pointer ${
-              isMax ? "border-black" : "border-gray-300"
-            }`}
-          >
-            <Minimize2
-              className={`${
-                changeScreen === "min" ? "text-gray-400" : "text-black"
-              }`}
-            />
-          </div>
-        </div>
-      </div>
+    <div className="mt-3 bg-white pb-[64px]">
+      <HomeNav />
       <div className={isMax ? "flex flex-col" : "grid grid-cols-2"}>
         {postsQuery.data &&
-          postsQuery.data.map((post) => <HomeItem key={post.id} post={post} />)}
+          postsQuery.data.map((post) => (
+            <HomeItem key={post.id} session={session} post={post} />
+          ))}
       </div>
     </div>
   );

@@ -1,9 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { dateFormatter } from "utils/date_format";
 import { changeScreenState } from "utils/recoil/atoms";
+import { Heart } from "react-feather";
+import { useState } from "react";
+import { toggleLike } from "actions/postActions";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "config/ReactQueryClientProvider";
 
-type PostProps = {
+export type PostProps = {
   author: string;
   content: string;
   created_at: string;
@@ -12,14 +19,35 @@ type PostProps = {
   title: string;
   updated_at?: string | null;
   profile_image?: string | null;
+  likes_count: number;
+  liked_by_user?: boolean;
 };
 
-export default function HomeItem({ post }: { post: PostProps }) {
+export default function HomeItem({
+  post,
+  session,
+}: {
+  post: PostProps;
+  session: any;
+}) {
   const isMax = useRecoilValue(changeScreenState) === "max";
+  const [isLike, setIsLike] = useState(post.liked_by_user);
+
+  const likeMutation = useMutation({
+    mutationFn: async () => {
+      setIsLike(!isLike);
+      await toggleLike(session?.user?.id, post.id, isLike);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["post"],
+      });
+    },
+  });
 
   return (
-    <Link href={`post/${post.id}`}>
-      <div className={`p-4 font-sea ${isMax && "border-b border-gray-200"}`}>
+    <div className={`p-4 font-sea ${isMax && "border-b border-gray-200"}`}>
+      <Link href={`post_detail/${post.id}`}>
         <div className="flex items-center gap-2">
           <img
             className={`${
@@ -64,7 +92,29 @@ export default function HomeItem({ post }: { post: PostProps }) {
             {post.content}
           </p>
         </div>
+      </Link>
+      <div className="mt-1">
+        <button
+          disabled={likeMutation.isPending || !session}
+          className="flex items-center gap-1"
+          onClick={() => likeMutation.mutate()}
+        >
+          <Heart
+            className={`w-[16px] h-[16px] ${
+              isLike && "fill-red-500 stroke-red-500"
+            }`}
+          />
+          {post?.likes_count > 0 && (
+            <p
+              className={`text-gray-600 text-[16px] leading-[14px] ${
+                isLike && "!text-red-500"
+              }`}
+            >
+              {Number(post?.likes_count).toString()}
+            </p>
+          )}
+        </button>
       </div>
-    </Link>
+    </div>
   );
 }

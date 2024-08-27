@@ -25,33 +25,3 @@ export async function uploadFile(formData) {
 
   return data;
 }
-
-export async function getPosts() {
-  const supabase = await createServerSupabaseClient();
-
-  const { data, error } = await supabase
-    .from("oneday")
-    .select("*")
-    .order("created_at", { ascending: true });
-
-  if (error) {
-    handleError(error);
-  }
-
-  return data;
-}
-
-export async function createPost(post) {
-  const supabase = await createServerSupabaseClient();
-
-  const { data, error } = await supabase.from("oneday").insert({
-    ...post,
-    created_at: new Date().toISOString(),
-  });
-
-  if (error) {
-    handleError(error);
-  }
-
-  return data;
-}

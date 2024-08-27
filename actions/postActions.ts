@@ -1,5 +1,6 @@
 "use server";
 
+import { PostProps } from "components/Home/HomeItem";
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 function handleError(error) {
@@ -7,6 +8,22 @@ function handleError(error) {
     console.error(error);
     throw error;
   }
+}
+
+export async function getPost(post_id): Promise<PostProps> {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("oneday")
+    .select("*")
+    .eq("id", post_id)
+    .single();
+
+  if (error) {
+    handleError(error);
+  }
+
+  return data;
 }
 
 export async function getPosts(userId) {

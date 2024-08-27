@@ -1,5 +1,5 @@
 import Header from "components/Header";
-import PostSection from "components/Post";
+import HomeSection from "components/Home";
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 export default async function Page() {
@@ -10,11 +10,9 @@ export default async function Page() {
   } = await supabase.auth.getSession();
 
   return (
-    <div className="font-sea">
+    <div className="">
       <Header session={session} />
-      <main className="p-4 w-full h-full bg-white">
-        <PostSection session={session} />
-      </main>
+      <HomeSection session={session} />
     </div>
   );
 }

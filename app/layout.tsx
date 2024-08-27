@@ -42,7 +42,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={yeongdeockSea.variable}>
-      <body className={`${inter.className} max-w-[528px] mx-auto bg-[#f5f5f5]`}>
+      <body
+        className={`${inter.className} min-h-screen max-w-[528px] mx-auto bg-[#f5f5f5]`}
+      >
         <AuthProvider accessToken={session?.access_token}>
           <ReactQueryClinetProvider>
             <RecoilProvider>

@@ -9,6 +9,9 @@ const config: Config = {
     "./layouts/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      md: "527px",
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

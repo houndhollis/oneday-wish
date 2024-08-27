@@ -75,7 +75,7 @@ export default function PostSection({ session }) {
         onClick={handleSubmit}
         className="self-end mt-3 px-3 py-1.5 flex items-center justify-center bg-black text-white rounded-[8px]"
       >
-        작성하기
+        {postMutation.isPending ? "작성중입니다!" : "작성하기"}
       </button>
     </div>
   );

@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <div className="font-sea">
       <Header session={session} />
-      <main className="p-4 w-full h-full bg-white">
+      <main className="p-4 w-full h-full bg-white pb-[72px]">
         <PostSection session={session} />
       </main>
     </div>

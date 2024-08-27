@@ -10,7 +10,11 @@ export default function Footer() {
   if (path === "/") return;
 
   return (
-    <footer className="w-[528px] px-5 h-[64px] fixed bottom-0 bg-white border-t-2 border-gray-200 z-50">
+    <footer
+      className={
+        "md:w-[528px] w-full px-5 h-[52px] fixed bottom-0 bg-white border-t-2 border-gray-200 z-50"
+      }
+    >
       <div className="h-full flex items-center">
         <Link href={"/home"} className="flex-1 flex justify-center">
           <Home

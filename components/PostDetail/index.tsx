@@ -1,26 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getPost } from "actions/postActions";
 import Avatar from "components/Avatar";
-import { useParams } from "next/navigation";
 
-export default function PostDetailSection() {
-  const params = useParams();
-
-  const { id } = params;
-
-  const postDetailQuery = useQuery({
-    queryKey: ["post_detail"],
-    queryFn: () => {
-      return getPost(id);
-    },
-  });
-
-  if (postDetailQuery.isPending) {
-    return <p>로딩중</p>;
-  }
-
+export default function PostDetailSection({ data }) {
   const {
     title,
     content,
@@ -29,7 +11,7 @@ export default function PostDetailSection() {
     image_url,
     likes_count,
     created_at,
-  } = postDetailQuery.data;
+  } = data;
 
   return (
     <div className="font-sea">

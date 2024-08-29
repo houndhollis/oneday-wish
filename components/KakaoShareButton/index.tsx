@@ -13,7 +13,7 @@ export default function KakaoShareButton({
   imageUrl = getLogoUrl,
 }: KaKaoShareButtonProps) {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-
+  console.log("공유 주소", shareUrl);
   const onShareClick = () => {
     const { Kakao } = window;
     Kakao.Share.sendDefault({

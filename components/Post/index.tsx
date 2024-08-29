@@ -75,6 +75,7 @@ export default function PostSection({ session }) {
       </FormControl>
       <button
         onClick={handleSubmit}
+        disabled={isLoading}
         className="self-end min-w-[73px] mt-3 px-3 py-1.5 flex items-center justify-center bg-black text-white rounded-[8px]"
       >
         {postMutation.isPending || isLoading ? (

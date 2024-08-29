@@ -32,10 +32,14 @@ export default function HomeItem({
 }) {
   const isMax = useRecoilValue(changeScreenState) === "max";
   const [isLike, setIsLike] = useState(post.liked_by_user);
+  const [likeCount, setLikeCount] = useState(post.likes_count);
 
   const likeMutation = useMutation({
     mutationFn: async () => {
       setIsLike(!isLike);
+      isLike
+        ? setLikeCount((prev) => prev - 1)
+        : setLikeCount((prev) => prev + 1);
       await toggleLike(session?.user?.id, post.id, isLike);
     },
     onSuccess: () => {
@@ -104,13 +108,13 @@ export default function HomeItem({
               isLike && "fill-red-500 stroke-red-500"
             }`}
           />
-          {post?.likes_count > 0 && (
+          {likeCount > 0 && (
             <p
               className={`text-gray-600 text-[16px] leading-[14px] ${
                 isLike && "!text-red-500"
               }`}
             >
-              {Number(post?.likes_count).toString()}
+              {Number(likeCount).toString()}
             </p>
           )}
         </button>

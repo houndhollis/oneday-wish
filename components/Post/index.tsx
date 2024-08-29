@@ -10,6 +10,7 @@ import { getImageUrl } from "utils/supabase/storage";
 import { useRouter } from "next/navigation";
 import FormControl from "components/FormControl";
 import UploadImage from "components/UploadImage";
+import { ClipLoader } from "react-spinners";
 
 export default function PostSection({ session }) {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function PostSection({ session }) {
 
   const postMutation = useMutation({
     mutationFn: async (image) => {
-      createPost({
+      return await createPost({
         author: session?.user?.user_metadata?.email,
         title,
         content,
@@ -28,11 +29,10 @@ export default function PostSection({ session }) {
       });
     },
     onSuccess: () => {
-      console.log("성공");
       router.replace("/home");
     },
   });
-
+  console.log(postMutation.isPending);
   const handleSubmit = async () => {
     if (!title || !content) {
       return alert("제목 또는 내용을 입력해주세요.");
@@ -73,9 +73,13 @@ export default function PostSection({ session }) {
       </FormControl>
       <button
         onClick={handleSubmit}
-        className="self-end mt-3 px-3 py-1.5 flex items-center justify-center bg-black text-white rounded-[8px]"
+        className="self-end min-w-[73px] mt-3 px-3 py-1.5 flex items-center justify-center bg-black text-white rounded-[8px]"
       >
-        {postMutation.isPending ? "작성중입니다!" : "작성하기"}
+        {postMutation.isPending ? (
+          <ClipLoader size={24} color="#fff" />
+        ) : (
+          "작성하기"
+        )}
       </button>
     </div>
   );

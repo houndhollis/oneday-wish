@@ -21,6 +21,7 @@
     "react-dropzone": "^14.2.3",
     "react-feather": "^2.0.10",
     "react-intersection-observer": "^9.13.0",
+    "react-spinners": "^0.14.1",
     "recoil": "^0.7.7",
     "supabase": "^1.187.10"
   },

@@ -16,6 +16,7 @@ export default function PostSection({ session }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const imageObjectState = useRecoilValue(imageState);
 
   const postMutation = useMutation({
@@ -29,10 +30,11 @@ export default function PostSection({ session }) {
       });
     },
     onSuccess: () => {
+      setIsLoading(false);
       router.replace("/home");
     },
   });
-  console.log(postMutation.isPending);
+
   const handleSubmit = async () => {
     if (!title || !content) {
       return alert("제목 또는 내용을 입력해주세요.");
@@ -40,7 +42,7 @@ export default function PostSection({ session }) {
 
     let fileResult;
     if (imageObjectState) {
-      console.log(imageObjectState.get("file"));
+      setIsLoading(true);
       fileResult = await uploadFile(imageObjectState);
     }
     postMutation.mutate(fileResult?.path);
@@ -75,7 +77,7 @@ export default function PostSection({ session }) {
         onClick={handleSubmit}
         className="self-end min-w-[73px] mt-3 px-3 py-1.5 flex items-center justify-center bg-black text-white rounded-[8px]"
       >
-        {postMutation.isPending ? (
+        {postMutation.isPending || isLoading ? (
           <ClipLoader size={24} color="#fff" />
         ) : (
           "작성하기"

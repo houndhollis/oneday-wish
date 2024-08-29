@@ -6,14 +6,14 @@ import { Share2 } from "react-feather";
 type KaKaoShareButtonProps = {
   title: string;
   imageUrl?: string;
+  shareUrl?: string;
 };
 
 export default function KakaoShareButton({
   title,
   imageUrl = getLogoUrl,
+  shareUrl = typeof window !== "undefined" ? window.location.href : "",
 }: KaKaoShareButtonProps) {
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  console.log("공유 주소", shareUrl);
   const onShareClick = () => {
     const { Kakao } = window;
     Kakao.Share.sendDefault({

@@ -158,3 +158,17 @@ export async function toggleLike(userId, postId, currentLikeStatus) {
 
   return true;
 }
+
+export async function deletePost(postId) {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("oneday")
+    .delete()
+    .eq("id", postId);
+
+  if (error) {
+    handleError(error);
+  }
+  return data;
+}

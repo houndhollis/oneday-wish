@@ -14,7 +14,7 @@ export default async function PostDetailPage({ params }) {
   return (
     <div>
       <Header session={session} />
-      <PostDetailSection data={data} />
+      <PostDetailSection data={data} session={session} />
     </div>
   );
 }

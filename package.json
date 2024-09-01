@@ -10,6 +10,7 @@
     "generate-types": "npx supabase gen types typescript --project-id rtgroihwoiiqctuykpgp --schema public > types_db.ts"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.3",
     "@supabase/ssr": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-query": "^5.51.11",

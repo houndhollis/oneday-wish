@@ -8,7 +8,7 @@ export const useKaKaoLogin = async () => {
     provider: "kakao",
     options: {
       redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
+        ? `https://daily-connection.vercel.app//auth/callback`
         : "http://localhost:3000/auth/callback",
     },
   });

@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { changeScreenState } from "utils/recoil/atoms";
 import HomeItem from "./HomeItem";
 import HomeNav from "./HomeNav";
+import Skeleton from "components/Skeleton/HomeSkeleton";
 
 export default function HomeSection({ session }) {
   const changeScreen = useRecoilValue(changeScreenState);
@@ -18,23 +19,19 @@ export default function HomeSection({ session }) {
     },
   });
 
-  if (postsQuery.isPending) {
-    return (
-      <div className="p-4">
-        <p>아직 구현중입니다 스켈레톤! 잠시만 기다려주세요!</p>
-      </div>
-    );
-  }
-
   return (
     <div className="mt-3 bg-white pb-[64px]">
       <HomeNav />
-      <div className={isMax ? "flex flex-col" : "grid grid-cols-2"}>
-        {postsQuery.data &&
-          postsQuery.data.map((post) => (
-            <HomeItem key={post.id} session={session} post={post} />
-          ))}
-      </div>
+      {postsQuery.isPending ? (
+        <Skeleton />
+      ) : (
+        <div className={isMax ? "flex flex-col" : "grid grid-cols-2"}>
+          {postsQuery.data &&
+            postsQuery.data.map((post) => (
+              <HomeItem key={post.id} session={session} post={post} />
+            ))}
+        </div>
+      )}
     </div>
   );
 }

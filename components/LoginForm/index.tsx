@@ -6,8 +6,18 @@ import Link from "next/link";
 import OneDayLogo from "../../public/oneday-logo.png";
 import KaKaoLoginButton from "../../public/kakao_login_large_wide.png";
 import { useKaKaoLogin } from "hooks/useKakaoLogin";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function LoginForm() {
+export default function LoginForm({ session }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      return router.replace("/home");
+    }
+  }, [session]);
+
   return (
     <div className="h-full min-h-screen flex flex-col items-center justify-center">
       <div className="flex flex-col items-center text-center mb-10">

@@ -7,5 +7,5 @@ export const imageState = atom({
 
 export const changeScreenState = atom({
   key: "chageScreenState",
-  default: "max",
+  default: "min",
 });

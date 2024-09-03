@@ -10,8 +10,8 @@ export default function HomeNav() {
 
   return (
     <div className="px-4 py-2 flex items-center justify-between">
-      <h1 className="font-sea text-[24px]">
-        {isMax ? "이미지 크게보기" : "이미지 작게보기"}
+      <h1 className="font-sea text-[22px]">
+        {isMax ? "이미지 글 크게 보기" : "이미지 글 작게 보기"}
       </h1>
       <div className="flex items-center gap-3">
         <div

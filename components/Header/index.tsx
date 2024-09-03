@@ -24,7 +24,7 @@ export default function Header({ session }) {
       ) : (
         <button
           onClick={() => useKaKaoLogin()}
-          className="bg-black rounded text-white text-[12px] py-1 px-2 "
+          className="bg-black rounded text-white text-[12px] px-2 "
         >
           로그인
         </button>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { deletePost } from "actions/postActions";
 import Avatar from "components/Avatar";
 import CanCelModal from "components/Modal/cancel-modal";
+import Image from "next/image";
 
 export default function PostDetailSection({ data, session }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,9 +36,14 @@ export default function PostDetailSection({ data, session }) {
     <div className="font-sea">
       {image_url && (
         <div className="relative pt-[100%]">
-          <img
+          <Image
+            width={350}
+            height={350}
+            alt="게시글 상세 이미지 사진"
             className="absolute inset-0 w-full h-full object-cover"
             src={image_url}
+            priority={true}
+            quality={60}
           />
         </div>
       )}

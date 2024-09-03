@@ -49,7 +49,7 @@ export default function HomeItem({
       });
     },
   });
-  console.log(isMax);
+
   return (
     <div className={`p-4 font-sea ${isMax && "border-b border-gray-200"}`}>
       <Link href={`post_detail/${post.id}`}>
@@ -88,7 +88,7 @@ export default function HomeItem({
                 className="absolute inset-0 w-full h-full object-cover border border-gray-100 rounded-[8px]"
                 src={post.image_url}
                 alt="게시물 이미지"
-                loading="lazy"
+                priority={true}
                 quality={isMax ? 75 : 10}
               />
             </div>

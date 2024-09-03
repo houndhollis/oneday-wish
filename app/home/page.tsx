@@ -1,5 +1,5 @@
 import Header from "components/Header";
-import HomeSection from "components/Home";
+import HomeSection from "components/Home/HomeSection";
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 export default async function Page() {

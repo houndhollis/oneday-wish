@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "actions/postActions";
 import { useRecoilValue } from "recoil";
 import { changeScreenState } from "utils/recoil/atoms";
-import HomeItem from "./HomeItem";
-import HomeNav from "./HomeNav";
+import HomeItem from "../HomeItem";
+import HomeNav from "../HomeNav";
 import Skeleton from "components/Skeleton/HomeSkeleton";
 
 export default function HomeSection({ session }) {

@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import Avatar from "components/Avatar";
 import { deletePost } from "actions/postActions";
+import Avatar from "components/Avatar";
+import CanCelModal from "components/Modal/cancel-modal";
 
 export default function PostDetailSection({ data, session }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const {
     id,
@@ -47,7 +50,7 @@ export default function PostDetailSection({ data, session }) {
           />
           {isPostAuthor && (
             <p
-              onClick={() => deleteMutation.mutate(id)}
+              onClick={() => setIsModalOpen(true)}
               className="text-gray-600 cursor-pointer"
             >
               삭제
@@ -59,6 +62,13 @@ export default function PostDetailSection({ data, session }) {
           <p className="text-gray-500 text-[18px]">{content}</p>
         </div>
       </div>
+      {isModalOpen && (
+        <CanCelModal
+          isLoading={deleteMutation.isPending}
+          onDelete={() => deleteMutation.mutate(id)}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

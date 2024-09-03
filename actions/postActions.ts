@@ -1,6 +1,6 @@
 "use server";
 
-import { PostProps } from "components/Home/HomeItem";
+import { PostProps } from "components/Home/HomeSection/HomeItem";
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 function handleError(error) {
@@ -26,12 +26,36 @@ export async function getPost(post_id): Promise<PostProps> {
   return data;
 }
 
+export async function getTextPosts(isLimit) {
+  const supabase = await createServerSupabaseClient();
+
+  const query = supabase
+    .from("oneday")
+    .select("*")
+    .is("image_url", null)
+    .order("created_at", { ascending: false });
+
+  if (isLimit) {
+    query.limit(5);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    handleError(error);
+    return [];
+  }
+
+  return data;
+}
+
 export async function getPosts(userId) {
   const supabase = await createServerSupabaseClient();
 
   const { data, error } = await supabase
     .from("oneday")
     .select("*")
+    .not("image_url", "is", null)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -99,7 +123,7 @@ export async function toggleLike(userId, postId, currentLikeStatus) {
       handleError(error);
       return false;
     }
-    // likes 감소 쿼리
+
     const { data: postData, error: postError } = await supabase
       .from("oneday")
       .select("likes_count")
@@ -131,7 +155,7 @@ export async function toggleLike(userId, postId, currentLikeStatus) {
       handleError(error);
       return false;
     }
-    // likes_count를 증가시키는 쿼리
+
     const { data: postData, error: postError } = await supabase
       .from("oneday")
       .select("likes_count")

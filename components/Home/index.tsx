@@ -23,7 +23,7 @@ export default function HomeSection({ session }) {
     <div className="mt-3 bg-white pb-[64px]">
       <HomeNav />
       {postsQuery.isPending ? (
-        <Skeleton />
+        <Skeleton type={changeScreen} />
       ) : (
         <div className={isMax ? "flex flex-col" : "grid grid-cols-2"}>
           {postsQuery.data &&

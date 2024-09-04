@@ -20,7 +20,7 @@ export default function HomeSection({ session }) {
   });
 
   return (
-    <div className="mt-3 bg-white pb-[64px]">
+    <div className="mt-6 bg-white pb-[64px]">
       <HomeNav />
       {postsQuery.isPending ? (
         <Skeleton type={changeScreen} />

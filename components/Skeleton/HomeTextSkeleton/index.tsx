@@ -2,8 +2,8 @@ export default function HomeTextSkeleton({ isHome = true }) {
   if (!isHome) {
     return (
       <div className="mt-6 flex flex-col gap-10 animate-pulse h-[94px]">
-        {Array.from({ length: 8 }).map((_) => (
-          <HomeTextListItem />
+        {Array.from({ length: 8 }).map((_, index) => (
+          <HomeTextListItem key={index} />
         ))}
       </div>
     );

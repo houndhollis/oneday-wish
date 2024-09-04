@@ -83,13 +83,13 @@ export default function HomeItem({
               }`}
             >
               <Image
-                width={isMax ? 300 : 200}
-                height={isMax ? 300 : 200}
+                width={isMax ? 250 : 150}
+                height={isMax ? 250 : 150}
                 className="absolute inset-0 w-full h-full object-cover border border-gray-100 rounded-[8px]"
                 src={post.image_url}
                 alt="게시물 이미지"
                 priority={true}
-                quality={isMax ? 75 : 10}
+                quality={isMax ? 75 : 40}
               />
             </div>
           )}

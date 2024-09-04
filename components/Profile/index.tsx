@@ -2,10 +2,10 @@
 
 import { createBrowserSupabaseClient } from "utils/supabase/client";
 import { useKaKaoLogin } from "hooks/useKakaoLogin";
+import ProfilePostSection from "./ProfilePostSection";
 
 export default function ProfileSection({ session }) {
   const userInfo = session?.user?.user_metadata;
-
   const supabase = createBrowserSupabaseClient();
 
   const onLogout = async () => {
@@ -13,9 +13,9 @@ export default function ProfileSection({ session }) {
   };
 
   return (
-    <div className="px-4 py-10 flex flex-col items-center justify-center font-sea">
+    <div className="px-4 py-10 h-full font-sea">
       {session ? (
-        <>
+        <div className="h-full flex flex-col items-center justify-center ">
           <img
             className="w-[128px] h-[128px] rounded-full object-cover"
             src={session?.user?.user_metadata?.avatar_url}
@@ -25,18 +25,28 @@ export default function ProfileSection({ session }) {
           </div>
           <button
             onClick={onLogout}
-            className="px-2 py-1.5 bg-black text-white rounded-[12px]"
+            className="mt-3 mb-10 px-2 py-1.5 bg-black text-white rounded-[12px]"
           >
             아쉬워요 로그아웃 !
           </button>
-        </>
+          <ProfilePostSection
+            userId={session?.user?.id}
+            author={session?.user?.user_metadata}
+          />
+        </div>
       ) : (
-        <button
-          onClick={() => useKaKaoLogin()}
-          className="px-2 py-1.5 bg-black text-white rounded-[12px]"
-        >
-          로그인 하러가기!
-        </button>
+        <div className="flex flex-col items-center">
+          <div className="text-center text-[22px]">
+            <p>하루 공감 서비스를 이용하기 위해서는</p>
+            <p>로그인이 필요합니다 🥲</p>
+          </div>
+          <button
+            onClick={() => useKaKaoLogin()}
+            className="mt-3 px-2 py-1.5 bg-black text-white rounded-[12px]"
+          >
+            로그인 하러가기!
+          </button>
+        </div>
       )}
     </div>
   );

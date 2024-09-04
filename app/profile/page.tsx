@@ -10,7 +10,7 @@ export default async function Profile() {
   } = await supabase.auth.getSession();
 
   return (
-    <div>
+    <div className="pb-[64px]">
       <Header session={session} />
       <ProfileSection session={session} />
     </div>

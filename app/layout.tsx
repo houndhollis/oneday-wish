@@ -8,6 +8,7 @@ import MainLayout from "layouts/MainLayout";
 import KakaoScript from "utils/script/KakaoSrcipt";
 import ReactQueryClinetProvider from "config/ReactQueryClientProvider";
 import RecoilProvider from "config/RecoilProvider";
+import SupabaseDnsPrefetch from "utils/script/SupabaseDnsPrefetch";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={yeongdeockSea.variable}>
+      <SupabaseDnsPrefetch />
       <body
         className={`${inter.className} min-h-screen max-w-[528px] mx-auto bg-[#f5f5f5]`}
       >

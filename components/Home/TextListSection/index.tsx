@@ -1,7 +1,7 @@
 "use client";
 
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getTextInfinityPosts, getTextPosts } from "actions/postActions";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getTextInfinityPosts } from "actions/postActions";
 import HomeTextItem from "../HomeTextSection/HomeTextItem";
 import HomeTextSkeleton from "components/Skeleton/HomeTextSkeleton";
 import { useInView } from "react-intersection-observer";
@@ -37,8 +37,8 @@ export default function TextListSection() {
       ) : (
         <div className="mt-3 flex flex-col gap-3">
           {data?.pages &&
-            data?.pages
-              ?.map((page) => page.data)
+            data.pages
+              .map((page) => page.data)
               .flat()
               .map((post) => (
                 <HomeTextItem key={post.id} post={post} isHome={false} />

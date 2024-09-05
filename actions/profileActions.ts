@@ -1,5 +1,6 @@
 "use server";
 
+import { GetMyPostsResponse } from "components/Profile/ProfilePostSection";
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 function handleError(error) {
@@ -9,18 +10,38 @@ function handleError(error) {
   }
 }
 
-export async function getMyPosts(userId, author) {
+export async function getMyPosts({
+  userId,
+  author,
+  page,
+  pageSize,
+}: {
+  userId: string;
+  author: string;
+  page: number;
+  pageSize: number;
+}): Promise<GetMyPostsResponse> {
   const supabase = await createServerSupabaseClient();
 
-  const { data, error } = await supabase
+  const { data, count, error } = await supabase
     .from("oneday")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("author", author)
+    .range((page - 1) * pageSize, page * pageSize - 1)
     .order("created_at", { ascending: false });
+
+  const hasNextPage = count > page * pageSize;
 
   if (error) {
     handleError(error);
-    return [];
+    return {
+      data: [],
+      count: 0,
+      page: null,
+      pageSize: null,
+      hasNextPage: false,
+      error,
+    };
   }
 
   const postIds = data.map((post) => post.id);
@@ -32,13 +53,27 @@ export async function getMyPosts(userId, author) {
 
   if (likesError) {
     handleError(likesError);
-    return [];
+    return {
+      data: [],
+      count: 0,
+      page: null,
+      pageSize: null,
+      hasNextPage: false,
+      error: likesError,
+    };
   }
 
   const likedPosts = likesData.map((like) => like.post_id);
 
-  return data.map((post) => ({
+  const likeData = data.map((post) => ({
     ...post,
     liked_by_user: likedPosts.includes(post.id),
   }));
+
+  return {
+    data: likeData,
+    page,
+    pageSize,
+    hasNextPage,
+  };
 }

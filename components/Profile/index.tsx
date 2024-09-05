@@ -30,6 +30,7 @@ export default function ProfileSection({ session }) {
             아쉬워요 로그아웃 !
           </button>
           <ProfilePostSection
+            session={session}
             userId={session?.user?.id}
             author={session?.user?.user_metadata}
           />

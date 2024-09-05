@@ -28,7 +28,7 @@ export default function PostDetailSection({ data, session }) {
       return deletePost(postId);
     },
     onSuccess: () => {
-      router.replace("/home");
+      router.back();
     },
   });
 

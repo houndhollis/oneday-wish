@@ -17,10 +17,10 @@ export type PostProps = {
   created_at: string;
   id: number;
   image_url?: string | null;
-  title: string;
+  title?: string;
   updated_at?: string | null;
   profile_image?: string | null;
-  likes_count: number;
+  likes_count?: number;
   liked_by_user?: boolean;
 };
 
@@ -107,28 +107,30 @@ export default function HomeItem({
           </p>
         </div>
       </Link>
-      <div className="mt-1">
-        <button
-          disabled={likeMutation.isPending || !session}
-          className="flex items-center gap-1"
-          onClick={() => likeMutation.mutate()}
-        >
-          <Heart
-            className={`w-[16px] h-[16px] ${
-              isLike && "fill-red-500 stroke-red-500"
-            }`}
-          />
-          {likeCount > 0 && (
-            <p
-              className={`text-gray-600 text-[16px] leading-[14px] ${
-                isLike && "!text-red-500"
+      {post.image_url && (
+        <div className="mt-1">
+          <button
+            disabled={likeMutation.isPending || !session}
+            className="flex items-center gap-1"
+            onClick={() => likeMutation.mutate()}
+          >
+            <Heart
+              className={`w-[16px] h-[16px] ${
+                isLike && "fill-red-500 stroke-red-500"
               }`}
-            >
-              {Number(likeCount).toString()}
-            </p>
-          )}
-        </button>
-      </div>
+            />
+            {likeCount > 0 && (
+              <p
+                className={`text-gray-600 text-[16px] leading-[14px] ${
+                  isLike && "!text-red-500"
+                }`}
+              >
+                {Number(likeCount).toString()}
+              </p>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

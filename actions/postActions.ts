@@ -26,6 +26,31 @@ export async function getPost(post_id): Promise<PostProps> {
   return data;
 }
 
+export async function getTextInfinityPosts({ page, pageSize }) {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, count, error } = await supabase
+    .from("oneday")
+    .select("*", { count: "exact" })
+    .is("image_url", null)
+    .range((page - 1) * pageSize, page * pageSize - 1)
+    .order("created_at", { ascending: false });
+
+  const hasNextPage = count > page * pageSize;
+
+  if (error) {
+    return {
+      data: [],
+      count: 0,
+      page: null,
+      pageSize: null,
+      error,
+    };
+  }
+
+  return { data, page, pageSize, hasNextPage };
+}
+
 export async function getTextPosts(isLimit) {
   const supabase = await createServerSupabaseClient();
 

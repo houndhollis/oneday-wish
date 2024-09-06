@@ -1,8 +1,8 @@
 "use client";
 
 import { createBrowserSupabaseClient } from "utils/supabase/client";
-import { useKaKaoLogin } from "hooks/useKakaoLogin";
 import ProfilePostSection from "./ProfilePostSection";
+import LoginButton from "components/LoginButton";
 
 export default function ProfileSection({ session }) {
   const userInfo = session?.user?.user_metadata;
@@ -41,12 +41,7 @@ export default function ProfileSection({ session }) {
             <p>하루 공감 서비스를 이용하기 위해서는</p>
             <p>로그인이 필요합니다 🥲</p>
           </div>
-          <button
-            onClick={() => useKaKaoLogin()}
-            className="mt-3 px-2 py-1.5 bg-black text-white rounded-[12px]"
-          >
-            로그인 하러가기!
-          </button>
+          <LoginButton />
         </div>
       )}
     </div>

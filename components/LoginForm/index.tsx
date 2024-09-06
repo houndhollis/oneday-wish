@@ -4,10 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import OneDayLogo from "../../public/oneday-logo.png";
-import KaKaoLoginButton from "../../public/kakao_login_large_wide.png";
-import { useKaKaoLogin } from "hooks/useKakaoLogin";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import LoginButton from "components/LoginButton";
 
 export default function LoginForm({ session }) {
   const router = useRouter();
@@ -31,14 +30,7 @@ export default function LoginForm({ session }) {
         <p className="mt-5 text-[22px] font-sea">하루 공감 다이어리</p>
         <p className="mt-1 text-[36px] font-bold font-sea">하루공감</p>
         <div className="flex flex-col items-center gap-4">
-          <button onClick={useKaKaoLogin} className="mt-5">
-            <Image
-              src={KaKaoLoginButton}
-              alt="카카오 로그인 버튼"
-              width={300}
-              height={45}
-            />
-          </button>
+          <LoginButton isCustom />
           <button className="w-[300px] h-[45px] rounded-[6px] bg-black">
             <Link
               className="w-full h-full flex items-center justify-center text-[14px] text-white"

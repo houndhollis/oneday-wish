@@ -6,6 +6,7 @@ import { useKaKaoLogin } from "hooks/useKakaoLogin";
 import KakaoShareButton from "components/KakaoShareButton";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import LoginButton from "components/LoginButton";
 
 export default function Header({ session }) {
   const segment = usePathname();
@@ -22,12 +23,7 @@ export default function Header({ session }) {
           <KakaoShareButton title="하루공감 하루의 있던 일을 나눠봐요" />
         </div>
       ) : (
-        <button
-          onClick={() => useKaKaoLogin()}
-          className="bg-black rounded text-white text-[12px] px-2 "
-        >
-          로그인
-        </button>
+        <LoginButton />
       )}
     </header>
   );

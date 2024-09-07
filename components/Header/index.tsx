@@ -23,7 +23,7 @@ export default function Header({ session }) {
           <KakaoShareButton title="하루공감 하루의 있던 일을 나눠봐요" />
         </div>
       ) : (
-        <LoginButton />
+        <LoginButton isCustom />
       )}
     </header>
   );

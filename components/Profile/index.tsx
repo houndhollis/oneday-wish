@@ -37,11 +37,11 @@ export default function ProfileSection({ session }) {
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <div className="text-center text-[22px]">
+          <div className="mb-2 text-center text-[22px]">
             <p>하루 공감 서비스를 이용하기 위해서는</p>
             <p>로그인이 필요합니다 🥲</p>
           </div>
-          <LoginButton />
+          <LoginButton isCustom />
         </div>
       )}
     </div>

@@ -30,7 +30,7 @@ export default function LoginForm({ session }) {
         <p className="mt-5 text-[22px] font-sea">하루 공감 다이어리</p>
         <p className="mt-1 text-[36px] font-bold font-sea">하루공감</p>
         <div className="flex flex-col items-center gap-4">
-          <LoginButton isCustom />
+          <LoginButton />
           <button className="w-[300px] h-[45px] rounded-[6px] bg-black">
             <Link
               className="w-full h-full flex items-center justify-center text-[14px] text-white"

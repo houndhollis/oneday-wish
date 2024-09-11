@@ -2,7 +2,7 @@
 
 import FormControl from "components/FormControl";
 
-export default function Input({ label, value, onChange, id }) {
+export default function Input({ label = "", value, onChange, id }) {
   return (
     <FormControl className="mt-4 gap-2" label={label} htmlFor={id}>
       <input

@@ -2,7 +2,7 @@
 
 import FormControl from "components/FormControl";
 
-export default function TextArea({ id, value, onChange, placeholder }) {
+export default function TextArea({ id, value, onChange, placeholder = "" }) {
   return (
     <FormControl className="mt-6" htmlFor="content">
       <textarea

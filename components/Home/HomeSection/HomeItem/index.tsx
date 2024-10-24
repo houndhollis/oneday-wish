@@ -5,11 +5,7 @@ import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { dateFormatter } from "utils/date_format";
 import { changeScreenState } from "utils/recoil/atoms";
-import { Heart } from "react-feather";
-import { useState } from "react";
-import { toggleLike } from "actions/postActions";
-import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "config/ReactQueryClientProvider";
+import ToggleLikeButton from "components/ToggleLikeButton";
 
 export type PostProps = {
   author: string;
@@ -32,23 +28,6 @@ export default function HomeItem({
   session: any;
 }) {
   const isMax = useRecoilValue(changeScreenState) === "max";
-  const [isLike, setIsLike] = useState(post.liked_by_user);
-  const [likeCount, setLikeCount] = useState(post.likes_count);
-
-  const likeMutation = useMutation({
-    mutationFn: async () => {
-      setIsLike(!isLike);
-      isLike
-        ? setLikeCount((prev) => prev - 1)
-        : setLikeCount((prev) => prev + 1);
-      await toggleLike(session?.user?.id, post.id, isLike);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["post"],
-      });
-    },
-  });
 
   return (
     <div className={`p-4 font-sea ${isMax && "border-b border-gray-200"}`}>
@@ -109,26 +88,12 @@ export default function HomeItem({
       </Link>
       {post.image_url && (
         <div className="mt-1">
-          <button
-            disabled={likeMutation.isPending || !session}
-            className="flex items-center gap-1"
-            onClick={() => likeMutation.mutate()}
-          >
-            <Heart
-              className={`w-[16px] h-[16px] ${
-                isLike && "fill-red-500 stroke-red-500"
-              }`}
-            />
-            {likeCount > 0 && (
-              <p
-                className={`text-gray-600 text-[16px] leading-[14px] ${
-                  isLike && "!text-red-500"
-                }`}
-              >
-                {Number(likeCount).toString()}
-              </p>
-            )}
-          </button>
+          <ToggleLikeButton
+            userId={session?.user?.id}
+            postId={post.id}
+            currentLikeStatus={post.liked_by_user}
+            likeCount={post.likes_count}
+          />
         </div>
       )}
     </div>

@@ -13,10 +13,9 @@ export const useToggleLike = (userId, postId, currentLikeStatus) => {
         queryKey: ["post", postId],
       });
 
-      const previousPosts: any = queryClient.getQueryData(["post"]);
-      const previousPost = previousPosts?.find((post) => post.id === postId);
-      queryClient.setQueryData(["post"], (oldPosts: any) => {
-        return oldPosts.map((post: any) =>
+      const previousPosts: PostProps = queryClient.getQueryData(["post"]);
+      queryClient.setQueryData(["post"], (oldPosts: PostProps[]) => {
+        return oldPosts.map((post: PostProps) =>
           post.id === postId
             ? {
                 ...post,
@@ -35,12 +34,12 @@ export const useToggleLike = (userId, postId, currentLikeStatus) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["post"],
+        queryKey: ["post", postId],
       });
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["post"],
+        queryKey: ["post", postId],
       });
     },
   });

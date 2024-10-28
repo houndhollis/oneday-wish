@@ -9,11 +9,11 @@ export default function ToggleLikeButton({
   currentLikeStatus,
   likeCount,
 }) {
-  const { mutate: toggleLike, isPending } = useToggleLike(
+  const { mutate: toggleLike, isPending } = useToggleLike({
     userId,
     postId,
-    currentLikeStatus
-  );
+    currentLikeStatus,
+  });
 
   return (
     <button

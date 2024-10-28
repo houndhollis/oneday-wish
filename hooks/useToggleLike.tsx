@@ -2,7 +2,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLike } from "actions/postActions";
 import { PostProps } from "components/Home/HomeSection/HomeItem";
 
-export const useToggleLike = (userId, postId, currentLikeStatus) => {
+type useToggleLikeProps = {
+  userId: string;
+  postId: number;
+  currentLikeStatus: boolean;
+};
+
+export const useToggleLike = ({
+  userId,
+  postId,
+  currentLikeStatus,
+}: useToggleLikeProps) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => {
@@ -28,14 +38,9 @@ export const useToggleLike = (userId, postId, currentLikeStatus) => {
 
       return { previousPosts };
     },
-    onError: (err, variables, context) => {
-      console.error("Error toggling like:", err);
+    onError: (error, variables, context) => {
+      console.error("Error toggling like:", error);
       queryClient.setQueryData(["post", postId], context.previousPosts);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["post", postId],
-      });
     },
     onSettled: () => {
       queryClient.invalidateQueries({
